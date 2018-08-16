@@ -1,0 +1,70 @@
+﻿@model CarService.ViewModels.CarDetailsVM
+
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Car</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Car.Model):
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Car.Model)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Car.Series):
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Car.Series)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Car.Price):
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Car.Price)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Car.Type):
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Car.Type)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Car.ReleaseDate):
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Car.ReleaseDate)
+        </dd>
+        <dt>
+            Car owners:
+        </dt>
+        <dd>
+            @foreach (var co in Model.Car.CarOwners)
+            {
+                <a asp-controller="Account" asp-action="Details" asp-route-id="@co.Owner.ID"> @co.Owner.Name @co.Owner.Surname</a>
+            }
+            @if (Model.Car.CarOwners.Count == 0)
+            {
+                <p>Car has no owners. Now it's government ownership </p>
+
+            }
+        </dd>
+    </dl>        
+</div>
+<div>
+    @if (Model.IsUserValidForEditing)
+    {
+        <a asp-action="Edit" asp-route-id="@Model.Car.ID">Edit</a>
+        <b>|</b>
+        <a asp-action="Delete" asp-route-id="@Model.Car.ID">Delete</a>
+        <b>|</b>
+        <a asp-action="AddCarOwner" asp-route-carId="@Model.Car.ID">AddOwner</a>
+        <b>|</b>
+    }
+    <a asp-action="Index">Back to List</a>
+</div>

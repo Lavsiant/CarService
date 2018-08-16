@@ -1,0 +1,72 @@
+﻿@model CarService.ViewModels.ProfileDetailsVm
+@{
+    ViewData["Title"] = "Details";
+}
+
+<h2>@Model.Owner.Login</h2>
+<div>
+
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Owner.Login):
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Owner.Login)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Owner.Name):
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Owner.Name)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Owner.Surname):
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Owner.Surname)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Owner.BornDate):
+        </dt>
+        <dd>
+            @Html.DisplayFor(model => model.Owner.BornDate)
+        </dd>
+        <dt>
+            @Html.DisplayNameFor(model => model.Owner.DrivingExperience):
+        </dt>
+        <dd>
+            @Model.Owner.DrivingExperience.ToString() years
+        </dd>
+        <dt>
+            Owner`s Cars
+        </dt>
+        <dd>
+            @foreach (var co in Model.Owner.CarOwners)
+            {
+                <p>
+                    Model: <a asp-controller="Cars" asp-action="Details" asp-route-id="@co.Car.ID">  @co.Car.Model  @co.Car.Series</a>
+                    @if (Model.IsValidForEditing)
+                    {
+                           <b>| </b>
+                        <a asp-controller="Cars" asp-action="AddCarOwner" asp-route-carId="@co.Car.ID"> Add owner to car </a>
+                    }
+                </p>
+            }
+            @if (Model.Owner.CarOwners.Count == 0)
+            {
+                <p>You have no cars yet</p>
+            }
+        </dd>
+    </dl>
+</div>
+<div>
+    @if (Model.IsValidForEditing)
+    {
+        <a asp-controller="Account" asp-action="Edit" asp-route-id="@Model.Owner.ID">Edit</a>
+        <b>|</b>
+        <a asp-controller="Account" asp-action="Delete" asp-route-id="@Model.Owner.ID">Delete</a>
+        <b>|</b>
+    }
+    <a asp-action="Index">Back to List</a>
+</div>
